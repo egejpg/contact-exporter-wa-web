@@ -16,7 +16,8 @@
 - **`activeTab` gerekçesi:** Kullanıcı simgeye tıkladığında yalnızca açık WhatsApp Web sekmesindeki kişi listesini okumak için.
 - **`scripting` gerekçesi:** Kişi listesini okuyan fonksiyonu o sekmede çalıştırmak için.
 - **Veri kullanımı:** "Kişisel iletişim bilgileri" işlenir; toplanmaz, aktarılmaz, satılmaz.
-- **Gizlilik politikası adresi:** geliştirici sitesindeki `/contact-exporter/privacy` sayfası (yayına girince). O zamana kadar GitHub'daki `PRIVACY.md` bağlantısı da kullanılabilir.
+- **Gizlilik politikası adresi:** https://egejpg.github.io/contact-exporter/privacy/
+- **Ana sayfa:** https://egejpg.github.io/contact-exporter/
 
 ## Marka
 

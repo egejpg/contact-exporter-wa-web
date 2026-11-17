@@ -7,6 +7,9 @@
 - VCF: profil adındaki tek başına `\r` karakteri kaçırılıyor. Daha önce bu karakterle dosyaya sahte kişi kartı eklenebiliyordu.
 - İsimlerdeki kontrol karakterleri ve yazı yönünü değiştiren Unicode karakterleri (ör. U+202E) temizleniyor.
 
+### Diğer
+- `homepage_url`: https://egejpg.github.io/contact-exporter/
+
 ## 1.0.0 — 2026-11-17
 
 - İlk sürüm: WhatsApp Web'deki kayıtlı kişileri CSV ve VCF olarak dışa aktarma, önizleme, arama, tek tek seçim, Türkçe Excel uyumlu CSV.

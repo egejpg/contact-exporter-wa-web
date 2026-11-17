@@ -3,6 +3,7 @@
   "name": "Contact Exporter for WA Web",
   "version": "1.0.1",
   "description": "WhatsApp Web'de kayıtlı kişilerini tek tıkla CSV ve VCF olarak dışa aktar. Veriler bilgisayarından hiç çıkmaz.",
+  "homepage_url": "https://egejpg.github.io/contact-exporter/",
   "permissions": ["activeTab", "scripting"],
   "action": {
     "default_title": "Contact Exporter for WA Web",

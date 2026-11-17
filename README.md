@@ -2,6 +2,8 @@
 
 WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (telefona aktarma) ve **CSV** (Excel) olarak dışa aktaran Chrome eklentisi. Telefonunu değiştirip rehberini aktarmayı unuttuysan, WhatsApp Web kişilerini hâlâ isimleriyle gösteriyorsa onları geri alabilirsin.
 
+**Tanıtım sayfası:** https://egejpg.github.io/contact-exporter/
+
 ![Eklenti ekranı](store-assets/01-ana-1280x800.png)
 
 > **English:** A Chrome extension that exports the saved contacts visible in WhatsApp Web to VCF and CSV. Everything runs locally: no servers, no analytics, no network requests. The UI is currently Turkish only.
