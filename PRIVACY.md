@@ -21,4 +21,4 @@ Eklenti simgesine tıkladığında ve açık sekme web.whatsapp.com olduğunda, 
 Bu eklenti WhatsApp LLC veya Meta Platforms ile bağlantılı değildir.
 
 ## İletişim
-Sorular için: egeergul67@gmail.com
+Sorular için: egeergul67 [at] gmail [nokta] com
