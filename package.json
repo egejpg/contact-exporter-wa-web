@@ -10,6 +10,6 @@
     "package": "node scripts/check-version.mjs && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

@@ -56,7 +56,7 @@ docs/           Mağaza metinleri ve yayınlama notları
 ```
 
 ```sh
-npm test          # testleri çalıştırır (Node 20+, bağımlılık yok)
+npm test          # testleri çalıştırır (Node 22+, bağımlılık yok)
 npm run package   # dist/ altına mağaza zip'ini üretir (Windows)
 ```
 
