@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <title>Contact Exporter for WA Web</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <img src="icons/icon48.png" alt="" width="28" height="28" />
+    <div class="title">
+      <h1>Contact Exporter for WA Web</h1>
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3H9z"/></svg>
+        Veriler bilgisayarından çıkmaz
+      </p>
+    </div>
+  </header>
+
+  <!-- Durum ekranları -->
+  <section id="state-loading" class="state">
+    <div class="spinner"></div>
+    <p>Kişiler okunuyor…</p>
+  </section>
+
+  <section id="state-message" class="state" hidden>
+    <p id="msg-title" class="msg-title"></p>
+    <p id="msg-body" class="msg-body"></p>
+    <button id="msg-action" class="primary" hidden></button>
+    <details id="msg-details" hidden><summary>Teknik ayrıntı</summary><pre id="msg-pre"></pre></details>
+  </section>
+
+  <!-- Sonuç ekranı -->
+  <section id="state-result" hidden>
+    <p class="summary"><strong id="count-selected">0</strong> / <span id="count-total">0</span> kişi seçili</p>
+
+    <input id="search" type="search" placeholder="İsim veya numara ara" autocomplete="off" />
+
+    <div class="list-head">
+      <label><input type="checkbox" id="select-all" checked /> Görünenlerin tümü</label>
+    </div>
+    <ul id="list"></ul>
+
+    <div class="options">
+      <label><input type="checkbox" id="opt-unsaved" /> Rehberde kayıtlı olmayanları da ekle</label>
+      <label>Numara biçimi
+        <select id="opt-format">
+          <option value="e164">+90 ile (+905321234567)</option>
+          <option value="tr">Yerel (0532 123 45 67)</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="opt-excel" checked /> CSV'yi Excel'de açacağım</label>
+    </div>
+
+    <div class="actions">
+      <button id="dl-csv" class="secondary">CSV indir</button>
+      <button id="dl-vcf" class="primary">Telefona aktar (VCF)</button>
+    </div>
+    <p class="hint">VCF dosyasını telefonuna gönderip açman, kişileri tek seferde rehbere ekler.</p>
+  </section>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

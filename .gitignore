@@ -1,0 +1,9 @@
+dist/
+*.zip
+node_modules/
+*.crx
+*.pem
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/

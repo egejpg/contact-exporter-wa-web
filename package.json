@@ -1,0 +1,15 @@
+{
+  "name": "contact-exporter-wa-web",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Chrome extension that exports saved contacts from WhatsApp Web to CSV and VCF, fully offline.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/",
+    "package": "node scripts/check-version.mjs && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
