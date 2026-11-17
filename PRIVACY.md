@@ -10,6 +10,7 @@ Eklenti simgesine tıkladığında ve açık sekme web.whatsapp.com olduğunda, 
 ## Veriler ne olur?
 - Okunan kişi listesi yalnızca eklenti penceresi açıkken bellekte tutulur. Pencere kapanınca silinir.
 - Dışa aktardığın CSV/VCF dosyaları doğrudan senin bilgisayarına indirilir.
+- Numara biçimi tercihin yalnızca senin tarayıcında, eklentinin kendi deposunda saklanır.
 - Eklenti hiçbir sunucuya bağlanmaz, analiz veya takip aracı içermez, veriyi kimseyle paylaşmaz ya da satmaz.
 - Kaynak kodu açıktır, bu iddiaları herkes doğrulayabilir.
 
