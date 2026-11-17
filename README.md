@@ -34,7 +34,8 @@ WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (tel
 | Seçenek | Ne yapar |
 |---|---|
 | Rehberde kayıtlı olmayanları da ekle | Kaydetmediğin numaraları kişinin kendi profil adıyla ekler |
-| Numara biçimi | `+905321234567` ya da `0532 123 45 67` (yalnızca CSV; VCF her zaman uluslararası biçimdedir) |
+| Numara biçimi | Uluslararası (`+905321234567`), boşluklu (`+90 532 123 45 67`), yerel (`0532 123 45 67`), `00905321234567` ya da yalnızca rakam. Yalnızca CSV'yi etkiler; VCF her zaman uluslararası biçimdedir |
+| Ülke | "Yerel" seçiliyken hangi ülkenin numaralarının yerel yazılacağı (240+ ülke). Diğer ülkelerin numaraları uluslararası kalır |
 | CSV'yi Excel'de açacağım | Türkçe Excel için `;` ayırıcı kullanır, numaraların bilimsel gösterime (9,05E+11) dönmesini engeller |
 
 ## Bilinen sınırlar
@@ -48,6 +49,7 @@ WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (tel
 ```
 extension/      Eklentinin kendisi (Manifest V3). Mağazaya giden zip bu klasörden üretilir.
   lib.js        Veri okuma (extractContacts), tekilleştirme, CSV/VCF üretimi
+  phone.js      Ülke kodları, numara ayrıştırma ve biçimlendirme
   popup.*       Arayüz
 test/           lib.js için birim testleri (node:test)
 scripts/        Sürüm kontrolü ve zip üretimi

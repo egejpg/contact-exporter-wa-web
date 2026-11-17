@@ -94,3 +94,6 @@ button:disabled { opacity: .45; cursor: default; }
 .secondary:hover:not(:disabled) { background: var(--accent-soft); }
 
 .hint { margin: 8px 0 0; font-size: 11px; color: var(--muted); }
+
+.options select { max-width: 215px; text-overflow: ellipsis; }
+.note { margin: -2px 0 0; font-size: 11px; color: var(--muted); }

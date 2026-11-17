@@ -45,10 +45,17 @@
       <label><input type="checkbox" id="opt-unsaved" /> Rehberde kayıtlı olmayanları da ekle</label>
       <label>Numara biçimi
         <select id="opt-format">
-          <option value="e164">+90 ile (+905321234567)</option>
-          <option value="tr">Yerel (0532 123 45 67)</option>
+          <option value="e164">Uluslararası (+905321234567)</option>
+          <option value="intl">Uluslararası, boşluklu (+90 532 123 45 67)</option>
+          <option value="local">Yerel (0532 123 45 67)</option>
+          <option value="idd">00 ile (00905321234567)</option>
+          <option value="digits">Yalnızca rakam (905321234567)</option>
         </select>
       </label>
+      <label id="row-country" hidden>Ülke
+        <select id="opt-country"></select>
+      </label>
+      <p id="country-note" class="note" hidden>Seçili ülke dışındaki numaralar uluslararası biçimde kalır. VCF her zaman uluslararası biçimdedir.</p>
       <label><input type="checkbox" id="opt-excel" checked /> CSV'yi Excel'de açacağım</label>
     </div>
 

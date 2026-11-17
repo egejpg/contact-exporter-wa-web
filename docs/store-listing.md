@@ -33,7 +33,7 @@ Telefon değiştirdin ama rehberini aktarmayı unuttun mu? WhatsApp Web hâlâ k
 
 • Telefona aktarmak için VCF, Excel için CSV
 • Önizleme, arama ve tek tek seçim
-• Türk numaraları için yerel biçim (0532 123 45 67)
+• 240'tan fazla ülke için yerel numara biçimi (0532 123 45 67, 0151 23456789 …)
 • Türkçe Excel uyumlu CSV
 • Tamamen yerel: sunucu yok, hesap yok, takip yok. Sadece simgeye tıkladığın sekmeye erişir.
 • Açık kaynak: kodu GitHub'da herkes inceleyebilir.

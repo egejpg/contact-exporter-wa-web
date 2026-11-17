@@ -1,6 +1,10 @@
 // Contact Exporter for WA Web — veri okuma ve dışa aktarma mantığı.
 // Hiçbir fonksiyon ağ isteği yapmaz; her şey tarayıcı içinde kalır.
 
+import { formatNumber } from './phone.js';
+
+export { formatNumber };
+
 /**
  * WhatsApp Web sekmesinin içinde çalıştırılır (chrome.scripting.executeScript).
  * Kendi kendine yeterli olmalı: dışarıdaki hiçbir değişkene erişemez.
@@ -68,7 +72,7 @@ export async function extractContacts() {
  */
 export function cleanName(s) {
   return String(s ?? '')
-    .replace(/[\u0000-\u001f\u007f-\u009f‎‏‪-‮⁦-⁩]+/g, ' ')
+    .replace(/[\u0000-\u001f\u007f-\u009f\u200e\u200f\u202a-\u202e\u2066-\u2069]+/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -92,15 +96,6 @@ export function buildList(contacts, { includeUnsaved = false } = {}) {
   });
 }
 
-/** Numarayı istenen biçime çevirir. style: 'e164' | 'tr' */
-export function formatNumber(digits, style = 'e164') {
-  if (style === 'tr' && digits.length === 12 && digits.startsWith('90')) {
-    const d = digits.slice(2); // 5321234567
-    return `0${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6, 8)} ${d.slice(8)}`;
-  }
-  return '+' + digits;
-}
-
 /**
  * CSV üretir.
  * excel=true: Türkçe Excel için ';' ayırıcı; numaralar metin olarak korunur
@@ -108,7 +103,7 @@ export function formatNumber(digits, style = 'e164') {
  * Her iki modda da =,+,-,@ ile başlayan isimler formül olarak çalıştırılmaz:
  * "Excel'de açacağım" kapalı olsa bile dosya sonunda bir tablo programında açılabilir.
  */
-export function toCSV(list, { excel = false, style = 'e164' } = {}) {
+export function toCSV(list, { excel = false, style = 'e164', country = 'TR' } = {}) {
   const sep = excel ? ';' : ',';
   const q = (s) => {
     const v = String(s ?? '');
@@ -116,7 +111,7 @@ export function toCSV(list, { excel = false, style = 'e164' } = {}) {
   };
   const safeName = (n) => (/^[=+\-@\t\r]/.test(n) ? "'" + n : n);
   const phone = (d) => {
-    const v = formatNumber(d, style);
+    const v = formatNumber(d, style, country);
     return excel ? '"=""' + v + '"""' : q(v);
   };
   const lines = [['Ad', 'Telefon'].join(sep)];

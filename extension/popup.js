@@ -1,7 +1,15 @@
 import { extractContacts, buildList, formatNumber, toCSV, toVCF } from './lib.js';
+import { COUNTRIES, codeOf, countryName, countryStats, searchKeys, splitNumber } from './phone.js';
 
 const WA_URL = 'https://web.whatsapp.com/';
 const $ = (id) => document.getElementById(id);
+
+// Biçim tercihleri yalnızca bu tarayıcıda, eklentinin kendi deposunda tutulur.
+const pref = {
+  get(k, d) { try { return localStorage.getItem('ce.' + k) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('ce.' + k, v); } catch { /* gizli pencere vb. */ } },
+};
+const fmt = () => ({ style: $('opt-format').value, country: $('opt-country').value || 'TR' });
 
 let raw = [];               // sekmeden okunan ham kayıtlar
 let list = [];              // tekilleştirilmiş, gösterilen liste
@@ -81,7 +89,55 @@ async function load() {
 // ---------- Liste ----------
 function rebuild() {
   list = buildList(raw, { includeUnsaved: $('opt-unsaved').checked });
+  fillCountries();
+  updateFormatUI();
   render();
+}
+
+// ---------- Numara biçimi ----------
+function fillCountries() {
+  const sel = $('opt-country');
+  const current = sel.value || pref.get('country', '');
+  const stats = countryStats(list);
+  sel.replaceChildren();
+
+  if (stats.length) {
+    const g = document.createElement('optgroup');
+    g.label = 'Rehberindeki ülkeler';
+    for (const s of stats) g.append(new Option(`${countryName(s.iso)} (+${s.code}) · ${s.count} kişi`, s.iso));
+    sel.append(g);
+  }
+  const all = document.createElement('optgroup');
+  all.label = 'Tüm ülkeler';
+  COUNTRIES
+    .map((c) => ({ ...c, name: countryName(c.iso) }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'tr'))
+    .forEach((c) => all.append(new Option(`${c.name} (+${c.code})`, c.iso)));
+  sel.append(all);
+
+  // Varsayılan: önceki seçim, yoksa rehberde en çok görülen ülke.
+  sel.value = codeOf(current) ? current : (stats[0] ? stats[0].iso : 'TR');
+}
+
+/** Seçeneklerdeki örnekleri kullanıcının kendi numaralarından birine göre günceller. */
+function updateFormatUI() {
+  const { style, country } = fmt();
+  const local = style === 'local';
+  $('row-country').hidden = !local;
+  $('country-note').hidden = !local;
+
+  const code = codeOf(country);
+  const own = list.find((x) => (splitNumber(x.digits) || {}).code === code);
+  const sample = (own || list[0] || { digits: '905321234567' }).digits;
+  const labels = {
+    e164: 'Uluslararası', intl: 'Uluslararası, boşluklu', local: 'Yerel', idd: '00 ile', digits: 'Yalnızca rakam',
+  };
+  for (const opt of $('opt-format').options) {
+    const example = opt.value === 'local'
+      ? (own ? formatNumber(own.digits, 'local', country) : 'ülke seç')
+      : formatNumber(sample, opt.value, country);
+    opt.textContent = `${labels[opt.value]} (${example})`;
+  }
 }
 
 function visible() {
@@ -90,7 +146,7 @@ function visible() {
   const qDigits = q.replace(/\D/g, '');
   return list.filter((x) =>
     x.name.toLocaleLowerCase('tr').includes(q) ||
-    (qDigits.length >= 3 && (x.digits.includes(qDigits) || ('0' + x.digits.slice(2)).includes(qDigits))),
+    (qDigits.length >= 3 && searchKeys(x.digits).some((k) => k.includes(qDigits))),
   );
 }
 
@@ -99,7 +155,7 @@ function selected() {
 }
 
 function render() {
-  const style = $('opt-format').value;
+  const { style, country } = fmt();
   const items = visible();
   const ul = $('list');
   ul.replaceChildren();
@@ -127,7 +183,7 @@ function render() {
     name.textContent = x.name || '(isimsiz)'; // textContent: isimlerdeki HTML asla çalıştırılmaz
     const num = document.createElement('span');
     num.className = 'num';
-    num.textContent = formatNumber(x.digits, style);
+    num.textContent = formatNumber(x.digits, style, country);
     label.append(cb, name, num);
     li.append(label);
     frag.append(li);
@@ -162,8 +218,23 @@ function download(text, ext, type) {
 }
 
 // ---------- Olaylar ----------
+{
+  const saved = pref.get('format', 'e164');
+  const value = saved === 'tr' ? 'local' : saved; // 1.0.1 ve öncesi
+  if ([...$('opt-format').options].some((o) => o.value === value)) $('opt-format').value = value;
+}
+
 $('search').addEventListener('input', render);
-$('opt-format').addEventListener('change', render);
+$('opt-format').addEventListener('change', () => {
+  pref.set('format', $('opt-format').value);
+  updateFormatUI();
+  render();
+});
+$('opt-country').addEventListener('change', () => {
+  pref.set('country', $('opt-country').value);
+  updateFormatUI();
+  render();
+});
 $('opt-unsaved').addEventListener('change', rebuild);
 $('select-all').addEventListener('change', (e) => {
   for (const x of visible()) e.target.checked ? deselected.delete(x.digits) : deselected.add(x.digits);
@@ -171,7 +242,7 @@ $('select-all').addEventListener('change', (e) => {
 });
 $('dl-csv').addEventListener('click', () => {
   const excel = $('opt-excel').checked;
-  download(toCSV(selected(), { excel, style: $('opt-format').value }), 'csv', 'text/csv;charset=utf-8');
+  download(toCSV(selected(), { excel, ...fmt() }), 'csv', 'text/csv;charset=utf-8');
 });
 $('dl-vcf').addEventListener('click', () => {
   download(toVCF(selected()), 'vcf', 'text/vcard;charset=utf-8');

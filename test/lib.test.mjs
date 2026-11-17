@@ -23,19 +23,19 @@ test('buildList: aynı numarada kayıtlı isim kayıtsız profil adına tercih e
 
 test('cleanName: satır sonu, kontrol ve yön değiştirme karakterleri temizlenir', () => {
   assert.equal(cleanName('Ali\r\nVeli'), 'Ali Veli');
-  assert.equal(cleanName('‮gnp.exe'), 'gnp.exe');
+  assert.equal(cleanName('\u202Egnp.exe'), 'gnp.exe');
   assert.equal(cleanName('  \n '), '');
 });
 
 test('formatNumber: Türk numarası yerel biçime, diğerleri uluslararası', () => {
   assert.equal(formatNumber('905321234567', 'tr'), '0532 123 45 67');
-  assert.equal(formatNumber('4915112345678', 'tr'), '+4915112345678');
+  assert.equal(formatNumber('4915112345678', 'tr'), '+49 151 12345678'); // yabancı numara okunur biçimde kalır
   assert.equal(formatNumber('905321234567'), '+905321234567');
 });
 
 test('toCSV: Excel modunda ; ayırıcı, BOM ve metin olarak korunan numara', () => {
   const csv = toCSV(buildList(sample), { excel: true, style: 'tr' });
-  assert.ok(csv.startsWith('﻿Ad;Telefon\r\n'));
+  assert.ok(csv.startsWith('\uFEFFAd;Telefon\r\n'));
   assert.ok(csv.includes('Ahmet Kılıç;"=""0532 123 45 67"""'));
 });
 

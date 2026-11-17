@@ -1,5 +1,14 @@
 # Değişiklik Günlüğü
 
+## 1.0.2 — 2026-11-18
+
+### Yeni
+- Numara biçimi seçenekleri: Uluslararası (+905321234567), Uluslararası boşluklu (+90 532 123 45 67), Yerel (0532 123 45 67), 00 ile ve Yalnızca rakam.
+- Yerel biçim için 240'tan fazla ülke arasından seçim. Rehberdeki ülkeler kişi sayısıyla listenin başında; varsayılan, rehberde en çok görülen ülke.
+- Seçeneklerdeki örnekler kendi numaralarından birine göre gösterilir.
+- Biçim ve ülke tercihi hatırlanır (yalnızca bu tarayıcıda, yeni izin gerekmeden).
+- Numara araması her ülkede yerel yazımla da çalışır (ör. 0151…).
+
 ## 1.0.1 — 2026-11-18
 
 ### Güvenlik
