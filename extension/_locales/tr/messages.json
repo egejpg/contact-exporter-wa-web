@@ -1,0 +1,56 @@
+{
+  "langCode": { "message": "tr", "description": "Arayüz dilinin kodu (ülke adları ve sıralama için)" },
+  "extName": { "message": "Contact Exporter for WA Web" },
+  "extDescription": { "message": "WhatsApp Web'de kayıtlı kişilerini tek tıkla CSV ve VCF olarak dışa aktar. Veriler bilgisayarından hiç çıkmaz." },
+
+  "privacy": { "message": "Veriler bilgisayarından çıkmaz" },
+  "loading": { "message": "Kişiler okunuyor…" },
+  "technicalDetails": { "message": "Teknik ayrıntı" },
+  "selectedSuffix": { "message": "kişi seçili" },
+  "searchPlaceholder": { "message": "İsim veya numara ara" },
+  "selectAllVisible": { "message": "Görünenlerin tümü" },
+  "noMatch": { "message": "Eşleşen kişi yok" },
+  "noName": { "message": "(isimsiz)" },
+
+  "optUnsaved": { "message": "Rehberde kayıtlı olmayanları da ekle" },
+  "numberFormat": { "message": "Numara biçimi" },
+  "fmtE164": { "message": "Uluslararası" },
+  "fmtIntl": { "message": "Uluslararası, boşluklu" },
+  "fmtLocal": { "message": "Yerel" },
+  "fmtIdd": { "message": "00 ile" },
+  "fmtDigits": { "message": "Yalnızca rakam" },
+  "pickCountry": { "message": "ülke seç" },
+  "country": { "message": "Ülke" },
+  "countryNote": { "message": "Seçili ülke dışındaki numaralar uluslararası biçimde kalır. VCF her zaman uluslararası biçimdedir." },
+  "inYourContacts": { "message": "Rehberindeki ülkeler" },
+  "allCountries": { "message": "Tüm ülkeler" },
+  "contactsCount": {
+    "message": "$COUNT$ kişi",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "optExcel": { "message": "CSV'yi Excel'de açacağım" },
+
+  "downloadCsv": { "message": "CSV indir" },
+  "exportVcf": { "message": "Telefona aktar (VCF)" },
+  "hint": { "message": "VCF dosyasını telefonuna gönderip açman, kişileri tek seferde rehbere ekler." },
+  "csvName": { "message": "Ad" },
+  "csvPhone": { "message": "Telefon" },
+
+  "openWhatsApp": { "message": "WhatsApp Web'i aç" },
+  "errNotWaTitle": { "message": "Önce WhatsApp Web'i aç" },
+  "errNotWaBody": { "message": "Bu sekme WhatsApp Web değil. web.whatsapp.com'u açıp sohbetlerin yüklenmesini bekle, sonra eklenti simgesine tekrar tıkla." },
+  "errTabTitle": { "message": "Sekmeye erişilemedi" },
+  "retry": { "message": "Sayfayı yenileyip tekrar dene." },
+  "errLoginTitle": { "message": "Giriş yapılmamış görünüyor" },
+  "errLoginBody": { "message": "WhatsApp Web'de oturum açık değil ya da henüz yüklenmedi. QR kodla giriş yapıp sohbetler göründükten sonra tekrar dene." },
+  "errNoDataTitle": { "message": "Kişi verisi bulunamadı" },
+  "errNoDataBody": { "message": "WhatsApp Web yapısını değiştirmiş olabilir. Aşağıdaki teknik ayrıntıyı geliştiriciye iletirsen düzeltilebilir." },
+  "errNoSavedTitle": { "message": "Kayıtlı kişi bulunamadı" },
+  "errNoSavedBody": {
+    "message": "$TOTAL$ kayıt okundu ama hiçbirinde rehber ismi yok. Rehberde kayıtlı olmayan numaraları da almak ister misin?",
+    "placeholders": { "total": { "content": "$1" } }
+  },
+  "showUnsaved": { "message": "Kayıtsızları da göster" },
+  "fields": { "message": "Alanlar" },
+  "errUnexpected": { "message": "Beklenmeyen hata" }
+}

@@ -98,13 +98,13 @@ export function buildList(contacts, { includeUnsaved = false } = {}) {
 
 /**
  * CSV üretir.
- * excel=true: Türkçe Excel için ';' ayırıcı; numaralar metin olarak korunur
- * (yoksa Excel +905321234567'yi 9,05E+11'e çevirir).
+ * excel=true: numaralar metin olarak korunur (yoksa Excel +905321234567'yi 9,05E+11'e çevirir).
+ * sep: ayırıcı. Excel'in beklediği ayırıcı bölge ayarına bağlıdır (ondalık virgülde ';', noktada ',');
+ * popup bunu kullanıcının bölgesinden seçer. headers: sütun başlıkları (arayüz dilinde).
  * Her iki modda da =,+,-,@ ile başlayan isimler formül olarak çalıştırılmaz:
  * "Excel'de açacağım" kapalı olsa bile dosya sonunda bir tablo programında açılabilir.
  */
-export function toCSV(list, { excel = false, style = 'e164', country = 'TR' } = {}) {
-  const sep = excel ? ';' : ',';
+export function toCSV(list, { excel = false, style = 'e164', country = 'TR', sep = excel ? ';' : ',', headers = ['Ad', 'Telefon'] } = {}) {
   const q = (s) => {
     const v = String(s ?? '');
     return /["\r\n,;]/.test(v) || v !== v.trim() ? '"' + v.replace(/"/g, '""') + '"' : v;
@@ -114,7 +114,7 @@ export function toCSV(list, { excel = false, style = 'e164', country = 'TR' } = 
     const v = formatNumber(d, style, country);
     return excel ? '"=""' + v + '"""' : q(v);
   };
-  const lines = [['Ad', 'Telefon'].join(sep)];
+  const lines = [headers.map((h) => q(h)).join(sep)];
   for (const x of list) lines.push([q(safeName(x.name)), phone(x.digits)].join(sep));
   return '\uFEFF' + lines.join('\r\n') + '\r\n'; // BOM: Excel Türkçe karakterleri doğru göstersin
 }

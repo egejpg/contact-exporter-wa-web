@@ -1,5 +1,15 @@
 # Değişiklik Günlüğü
 
+## 1.1.0 — 2026-11-18
+
+### Yeni
+- İngilizce arayüz. Chrome'un diline göre Türkçe ya da İngilizce açılır (diğer dillerde İngilizce). Eklentinin adı ve açıklaması da iki dilde.
+- Ülke adları ve CSV başlıkları arayüz dilinde ("Ad/Telefon" ya da "Name/Phone").
+- "Excel'de açacağım" seçeneği ayırıcıyı bölge ayarına göre seçer: ondalık virgül kullanan bölgelerde `;`, nokta kullananlarda `,` (İngilizce Excel'de sütunlar artık doğru ayrılır).
+
+### Düzeltme
+- Arama, Türkçe ve İngilizce küçük harf kurallarının ikisiyle de eşleşir (ör. "ivan" → "Ivan").
+
 ## 1.0.2 — 2026-11-18
 
 ### Yeni

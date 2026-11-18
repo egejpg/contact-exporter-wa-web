@@ -4,6 +4,21 @@ import { COUNTRIES, codeOf, countryName, countryStats, searchKeys, splitNumber }
 const WA_URL = 'https://web.whatsapp.com/';
 const $ = (id) => document.getElementById(id);
 
+// ---------- Dil ----------
+// Metinler _locales/<dil>/messages.json'dan gelir; Chrome tarayıcının diline göre seçer.
+const t = (key, ...subs) => chrome.i18n.getMessage(key, subs.map(String)) || key;
+// Eklentinin gerçekten gösterdiği dil (tarayıcı Almancaysa bile arayüz İngilizce olabilir).
+const uiLang = t('langCode') === 'tr' ? 'tr' : 'en';
+
+function translatePage() {
+  document.documentElement.lang = uiLang;
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+}
+
+// Excel'in liste ayırıcısı bölge ayarına bağlı: ondalık virgül kullanan yerlerde ';', diğerlerinde ','.
+const excelSeparator = new Intl.NumberFormat(navigator.language || uiLang).format(1.5).includes(',') ? ';' : ',';
+
 // Biçim tercihleri yalnızca bu tarayıcıda, eklentinin kendi deposunda tutulur.
 const pref = {
   get(k, d) { try { return localStorage.getItem('ce.' + k) ?? d; } catch { return d; } },
@@ -34,19 +49,14 @@ function message(title, body, action, details) {
   show('state-message');
 }
 
-const openWhatsApp = { label: "WhatsApp Web'i aç", run: () => chrome.tabs.create({ url: WA_URL }) };
-
 // ---------- Okuma ----------
 async function load() {
   show('state-loading');
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
   if (!tab || !tab.url || !tab.url.startsWith(WA_URL)) {
-    return message(
-      "Önce WhatsApp Web'i aç",
-      "Bu sekme WhatsApp Web değil. web.whatsapp.com'u açıp sohbetlerin yüklenmesini bekle, sonra eklenti simgesine tekrar tıkla.",
-      openWhatsApp,
-    );
+    return message(t('errNotWaTitle'), t('errNotWaBody'),
+      { label: t('openWhatsApp'), run: () => chrome.tabs.create({ url: WA_URL }) });
   }
 
   let result;
@@ -54,33 +64,22 @@ async function load() {
     const [inj] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractContacts });
     result = inj && inj.result;
   } catch (e) {
-    return message('Sekmeye erişilemedi', 'Sayfayı yenileyip tekrar dene.', null, String(e && e.message || e));
+    return message(t('errTabTitle'), t('retry'), null, String(e && e.message || e));
   }
 
   if (!result || !result.ok) {
-    const code = result && result.code;
-    if (code === 'NO_DB') {
-      return message(
-        'Giriş yapılmamış görünüyor',
-        'WhatsApp Web’de oturum açık değil ya da henüz yüklenmedi. QR kodla giriş yapıp sohbetler göründükten sonra tekrar dene.',
-      );
-    }
-    return message(
-      'Kişi verisi bulunamadı',
-      'WhatsApp Web yapısını değiştirmiş olabilir. Aşağıdaki teknik ayrıntıyı geliştiriciye iletirsen düzeltilebilir.',
-      null,
-      JSON.stringify(result || {}, null, 1),
-    );
+    if (result && result.code === 'NO_DB') return message(t('errLoginTitle'), t('errLoginBody'));
+    return message(t('errNoDataTitle'), t('errNoDataBody'), null, JSON.stringify(result || {}, null, 1));
   }
 
   raw = result.contacts;
   rebuild();
   if (!list.length && !$('opt-unsaved').checked) {
     return message(
-      'Kayıtlı kişi bulunamadı',
-      `${result.total} kayıt okundu ama hiçbirinde rehber ismi yok. Rehberde kayıtlı olmayan numaraları da almak ister misin?`,
-      { label: 'Kayıtsızları da göster', run: () => { $('opt-unsaved').checked = true; rebuild(); show('state-result'); } },
-      'Alanlar: ' + (result.sampleKeys || []).join(', '),
+      t('errNoSavedTitle'),
+      t('errNoSavedBody', result.total),
+      { label: t('showUnsaved'), run: () => { $('opt-unsaved').checked = true; rebuild(); show('state-result'); } },
+      t('fields') + ': ' + (result.sampleKeys || []).join(', '),
     );
   }
   show('state-result');
@@ -103,15 +102,17 @@ function fillCountries() {
 
   if (stats.length) {
     const g = document.createElement('optgroup');
-    g.label = 'Rehberindeki ülkeler';
-    for (const s of stats) g.append(new Option(`${countryName(s.iso)} (+${s.code}) · ${s.count} kişi`, s.iso));
+    g.label = t('inYourContacts');
+    for (const s of stats) {
+      g.append(new Option(`${countryName(s.iso, uiLang)} (+${s.code}) · ${t('contactsCount', s.count)}`, s.iso));
+    }
     sel.append(g);
   }
   const all = document.createElement('optgroup');
-  all.label = 'Tüm ülkeler';
+  all.label = t('allCountries');
   COUNTRIES
-    .map((c) => ({ ...c, name: countryName(c.iso) }))
-    .sort((a, b) => a.name.localeCompare(b.name, 'tr'))
+    .map((c) => ({ ...c, name: countryName(c.iso, uiLang) }))
+    .sort((a, b) => a.name.localeCompare(b.name, uiLang))
     .forEach((c) => all.append(new Option(`${c.name} (+${c.code})`, c.iso)));
   sel.append(all);
 
@@ -129,25 +130,27 @@ function updateFormatUI() {
   const code = codeOf(country);
   const own = list.find((x) => (splitNumber(x.digits) || {}).code === code);
   const sample = (own || list[0] || { digits: '905321234567' }).digits;
-  const labels = {
-    e164: 'Uluslararası', intl: 'Uluslararası, boşluklu', local: 'Yerel', idd: '00 ile', digits: 'Yalnızca rakam',
-  };
+  const labels = { e164: 'fmtE164', intl: 'fmtIntl', local: 'fmtLocal', idd: 'fmtIdd', digits: 'fmtDigits' };
   for (const opt of $('opt-format').options) {
     const example = opt.value === 'local'
-      ? (own ? formatNumber(own.digits, 'local', country) : 'ülke seç')
+      ? (own ? formatNumber(own.digits, 'local', country) : t('pickCountry'))
       : formatNumber(sample, opt.value, country);
-    opt.textContent = `${labels[opt.value]} (${example})`;
+    opt.textContent = `${t(labels[opt.value])} (${example})`;
   }
 }
 
 function visible() {
-  const q = $('search').value.trim().toLocaleLowerCase('tr');
+  const q = $('search').value.trim();
   if (!q) return list;
+  // Hem Türkçe (I→ı) hem genel küçük harf kuralıyla karşılaştır; iki dilde de doğru eşleşsin.
+  const lower = (s) => [s.toLocaleLowerCase('tr'), s.toLowerCase()];
+  const needles = lower(q);
   const qDigits = q.replace(/\D/g, '');
-  return list.filter((x) =>
-    x.name.toLocaleLowerCase('tr').includes(q) ||
-    (qDigits.length >= 3 && searchKeys(x.digits).some((k) => k.includes(qDigits))),
-  );
+  return list.filter((x) => {
+    const hay = lower(x.name);
+    return hay.some((h) => needles.some((n) => h.includes(n))) ||
+      (qDigits.length >= 3 && searchKeys(x.digits).some((k) => k.includes(qDigits)));
+  });
 }
 
 function selected() {
@@ -163,7 +166,7 @@ function render() {
   if (!items.length) {
     const li = document.createElement('li');
     li.className = 'empty';
-    li.textContent = 'Eşleşen kişi yok';
+    li.textContent = t('noMatch');
     ul.append(li);
   }
 
@@ -180,7 +183,7 @@ function render() {
     });
     const name = document.createElement('span');
     name.className = 'name' + (x.saved ? '' : ' unsaved');
-    name.textContent = x.name || '(isimsiz)'; // textContent: isimlerdeki HTML asla çalıştırılmaz
+    name.textContent = x.name || t('noName'); // textContent: isimlerdeki HTML asla çalıştırılmaz
     const num = document.createElement('span');
     num.className = 'num';
     num.textContent = formatNumber(x.digits, style, country);
@@ -218,6 +221,7 @@ function download(text, ext, type) {
 }
 
 // ---------- Olaylar ----------
+translatePage();
 {
   const saved = pref.get('format', 'e164');
   const value = saved === 'tr' ? 'local' : saved; // 1.0.1 ve öncesi
@@ -242,10 +246,16 @@ $('select-all').addEventListener('change', (e) => {
 });
 $('dl-csv').addEventListener('click', () => {
   const excel = $('opt-excel').checked;
-  download(toCSV(selected(), { excel, ...fmt() }), 'csv', 'text/csv;charset=utf-8');
+  const csv = toCSV(selected(), {
+    excel,
+    sep: excel ? excelSeparator : ',',
+    headers: [t('csvName'), t('csvPhone')],
+    ...fmt(),
+  });
+  download(csv, 'csv', 'text/csv;charset=utf-8');
 });
 $('dl-vcf').addEventListener('click', () => {
   download(toVCF(selected()), 'vcf', 'text/vcard;charset=utf-8');
 });
 
-load().catch((e) => message('Beklenmeyen hata', 'Sayfayı yenileyip tekrar dene.', null, String(e && e.stack || e)));
+load().catch((e) => message(t('errUnexpected'), t('retry'), null, String(e && e.stack || e)));

@@ -6,7 +6,9 @@ WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (tel
 
 ![Eklenti ekranı](store-assets/01-ana-1280x800.png)
 
-> **English:** A Chrome extension that exports the saved contacts visible in WhatsApp Web to VCF and CSV. Everything runs locally: no servers, no analytics, no network requests. The UI is currently Turkish only.
+> **English:** A Chrome extension that exports the saved contacts visible in WhatsApp Web to VCF and CSV. Everything runs locally: no servers, no analytics, no network requests. The interface is available in English and Turkish.
+>
+> [Chrome Web Store](https://chromewebstore.google.com/detail/contact-exporter-for-wa-w/eaipkkaokidhcalpnlhmmnicjgnggjmp)
 
 ## Neden güvenilir?
 
@@ -16,7 +18,7 @@ WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (tel
 
 ## Kurulum
 
-**Chrome Web Store:** _(bağlantı yayınlanınca eklenecek)_
+**Chrome Web Store:** https://chromewebstore.google.com/detail/contact-exporter-for-wa-w/eaipkkaokidhcalpnlhmmnicjgnggjmp
 
 **Geliştirici modu:**
 1. Bu repoyu indir (Code → Download ZIP) ve bir klasöre aç.
@@ -36,13 +38,12 @@ WhatsApp Web'de rehberinde kayıtlı görünen kişileri tek tıkla **VCF** (tel
 | Rehberde kayıtlı olmayanları da ekle | Kaydetmediğin numaraları kişinin kendi profil adıyla ekler |
 | Numara biçimi | Uluslararası (`+905321234567`), boşluklu (`+90 532 123 45 67`), yerel (`0532 123 45 67`), `00905321234567` ya da yalnızca rakam. Yalnızca CSV'yi etkiler; VCF her zaman uluslararası biçimdedir |
 | Ülke | "Yerel" seçiliyken hangi ülkenin numaralarının yerel yazılacağı (240+ ülke). Diğer ülkelerin numaraları uluslararası kalır |
-| CSV'yi Excel'de açacağım | Türkçe Excel için `;` ayırıcı kullanır, numaraların bilimsel gösterime (9,05E+11) dönmesini engeller |
+| CSV'yi Excel'de açacağım | Ayırıcıyı bölge ayarına göre seçer (Türkçe Excel'de `;`, İngilizce Excel'de `,`), numaraların bilimsel gösterime (9,05E+11) dönmesini engeller |
 
 ## Bilinen sınırlar
 
 - WhatsApp Web'in iç veri yapısı resmî bir arayüz değil, WhatsApp onu değiştirebilir. Okuma başarısız olursa eklenti "Teknik ayrıntı" bölümünde alan adlarını gösterir. Bunu bir [issue](../../issues) olarak paylaşırsan düzeltilebilir.
 - Her kişi için WhatsApp'taki tek numara alınır. E-posta, ikinci numara, adres gibi bilgiler WhatsApp'ta olmadığı için gelmez.
-- "Excel'de açacağım" modu Türkçe/Avrupa bölge ayarlı Excel'e göredir. İngilizce Excel'de bu seçeneği kapat.
 
 ## Geliştirme
 
@@ -51,6 +52,7 @@ extension/      Eklentinin kendisi (Manifest V3). Mağazaya giden zip bu klasör
   lib.js        Veri okuma (extractContacts), tekilleştirme, CSV/VCF üretimi
   phone.js      Ülke kodları, numara ayrıştırma ve biçimlendirme
   popup.*       Arayüz
+  _locales/     Arayüz metinleri (en, tr). Varsayılan dil İngilizce
 test/           lib.js için birim testleri (node:test)
 scripts/        Sürüm kontrolü ve zip üretimi
 store-assets/   Chrome Web Store görselleri

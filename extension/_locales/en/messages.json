@@ -1,0 +1,56 @@
+{
+  "langCode": { "message": "en", "description": "Arayüz dilinin kodu (ülke adları ve sıralama için)" },
+  "extName": { "message": "Contact Exporter for WA Web" },
+  "extDescription": { "message": "Export your saved WhatsApp Web contacts to CSV and VCF in one click. Your data never leaves your computer." },
+
+  "privacy": { "message": "Your data never leaves your computer" },
+  "loading": { "message": "Reading contacts…" },
+  "technicalDetails": { "message": "Technical details" },
+  "selectedSuffix": { "message": "selected" },
+  "searchPlaceholder": { "message": "Search by name or number" },
+  "selectAllVisible": { "message": "All visible" },
+  "noMatch": { "message": "No matching contacts" },
+  "noName": { "message": "(no name)" },
+
+  "optUnsaved": { "message": "Also include numbers not saved in your contacts" },
+  "numberFormat": { "message": "Number format" },
+  "fmtE164": { "message": "International" },
+  "fmtIntl": { "message": "International, spaced" },
+  "fmtLocal": { "message": "Local" },
+  "fmtIdd": { "message": "With 00" },
+  "fmtDigits": { "message": "Digits only" },
+  "pickCountry": { "message": "pick a country" },
+  "country": { "message": "Country" },
+  "countryNote": { "message": "Numbers from other countries stay in international format. VCF always uses international format." },
+  "inYourContacts": { "message": "In your contacts" },
+  "allCountries": { "message": "All countries" },
+  "contactsCount": {
+    "message": "$COUNT$ contacts",
+    "placeholders": { "count": { "content": "$1" } }
+  },
+  "optExcel": { "message": "I'll open the CSV in Excel" },
+
+  "downloadCsv": { "message": "Download CSV" },
+  "exportVcf": { "message": "Send to phone (VCF)" },
+  "hint": { "message": "Send the VCF file to your phone and open it to add all contacts at once." },
+  "csvName": { "message": "Name" },
+  "csvPhone": { "message": "Phone" },
+
+  "openWhatsApp": { "message": "Open WhatsApp Web" },
+  "errNotWaTitle": { "message": "Open WhatsApp Web first" },
+  "errNotWaBody": { "message": "This tab isn't WhatsApp Web. Open web.whatsapp.com, wait for your chats to load, then click the extension icon again." },
+  "errTabTitle": { "message": "Couldn't access the tab" },
+  "retry": { "message": "Reload the page and try again." },
+  "errLoginTitle": { "message": "You don't seem to be signed in" },
+  "errLoginBody": { "message": "WhatsApp Web isn't signed in or hasn't finished loading. Sign in with the QR code, wait until your chats appear, then try again." },
+  "errNoDataTitle": { "message": "No contact data found" },
+  "errNoDataBody": { "message": "WhatsApp Web may have changed its structure. If you send the technical details below to the developer, it can be fixed." },
+  "errNoSavedTitle": { "message": "No saved contacts found" },
+  "errNoSavedBody": {
+    "message": "$TOTAL$ records were read, but none of them has a name from your address book. Do you want to include unsaved numbers too?",
+    "placeholders": { "total": { "content": "$1" } }
+  },
+  "showUnsaved": { "message": "Show unsaved numbers too" },
+  "fields": { "message": "Fields" },
+  "errUnexpected": { "message": "Unexpected error" }
+}
