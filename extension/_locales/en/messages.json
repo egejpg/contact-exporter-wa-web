@@ -52,5 +52,9 @@
   },
   "showUnsaved": { "message": "Show unsaved numbers too" },
   "fields": { "message": "Fields" },
+  "loadingSlow": { "message": "WhatsApp Web seems busy (it may still be syncing your chats). This can take a few seconds…" },
+  "errSlowTitle": { "message": "WhatsApp Web didn't respond" },
+  "errSlowBody": { "message": "WhatsApp Web is probably still syncing. Wait until your chats have finished loading, then try again. If it keeps happening, reload the WhatsApp Web tab." },
+  "tryAgain": { "message": "Try again" },
   "errUnexpected": { "message": "Unexpected error" }
 }

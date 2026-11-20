@@ -8,6 +8,7 @@
 - "Excel'de açacağım" seçeneği ayırıcıyı bölge ayarına göre seçer: ondalık virgül kullanan bölgelerde `;`, nokta kullananlarda `,` (İngilizce Excel'de sütunlar artık doğru ayrılır).
 
 ### Düzeltme
+- Popup artık "Kişiler okunuyor…" ekranında sonsuza kadar beklemiyor. WhatsApp Web eşitleme yaparken okuma sırada bekleyebiliyor: 3 saniyeden uzun sürerse açıklama gösterilir, 20 saniyede yanıt yoksa "Tekrar dene" düğmesi çıkar.
 - Arama, Türkçe ve İngilizce küçük harf kurallarının ikisiyle de eşleşir (ör. "ivan" → "Ivan").
 
 ## 1.0.2 — 2026-11-18

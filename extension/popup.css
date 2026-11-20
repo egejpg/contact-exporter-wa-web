@@ -36,6 +36,7 @@ section { padding: 12px 14px 14px; }
 [hidden] { display: none !important; }
 
 .state { text-align: center; padding: 28px 18px; }
+#loading-hint { margin-top: 10px; }
 .msg-title { font-weight: 600; font-size: 14px; margin: 0 0 6px; }
 .msg-body { color: var(--muted); margin: 0 0 14px; }
 details { margin-top: 12px; text-align: left; color: var(--muted); font-size: 11px; }

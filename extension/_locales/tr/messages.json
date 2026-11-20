@@ -52,5 +52,9 @@
   },
   "showUnsaved": { "message": "Kayıtsızları da göster" },
   "fields": { "message": "Alanlar" },
+  "loadingSlow": { "message": "WhatsApp Web meşgul görünüyor (sohbetlerini eşitliyor olabilir). Bu birkaç saniye sürebilir…" },
+  "errSlowTitle": { "message": "WhatsApp Web yanıt vermedi" },
+  "errSlowBody": { "message": "WhatsApp Web büyük ihtimalle hâlâ eşitleme yapıyor. Sohbetlerin tamamen yüklenene kadar bekleyip tekrar dene. Sürekli oluyorsa WhatsApp Web sekmesini yenile." },
+  "tryAgain": { "message": "Tekrar dene" },
   "errUnexpected": { "message": "Beklenmeyen hata" }
 }

@@ -2,6 +2,11 @@ import { extractContacts, buildList, formatNumber, toCSV, toVCF } from './lib.js
 import { COUNTRIES, codeOf, countryName, countryStats, searchKeys, splitNumber } from './phone.js';
 
 const WA_URL = 'https://web.whatsapp.com/';
+// WhatsApp Web eşitleme yaparken veritabanına yazar; okuma o yazmalar bitene kadar sırada bekler.
+const SLOW_MS = 3000;    // bu süreden sonra "meşgul görünüyor" açıklaması
+const LIMIT_MS = 20000;  // bu süreden sonra sonsuz bekleme yerine "tekrar dene"
+const TIMEOUT = Symbol('timeout');
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(TIMEOUT), ms))]);
 const $ = (id) => document.getElementById(id);
 
 // ---------- Dil ----------
@@ -60,11 +65,17 @@ async function load() {
   }
 
   let result;
+  $('loading-hint').hidden = true;
+  const slow = setTimeout(() => { $('loading-hint').hidden = false; }, SLOW_MS);
   try {
-    const [inj] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractContacts });
+    const run = chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractContacts });
+    const [inj] = await withTimeout(run, LIMIT_MS);
     result = inj && inj.result;
   } catch (e) {
+    if (e === TIMEOUT) return message(t('errSlowTitle'), t('errSlowBody'), { label: t('tryAgain'), run: start });
     return message(t('errTabTitle'), t('retry'), null, String(e && e.message || e));
+  } finally {
+    clearTimeout(slow);
   }
 
   if (!result || !result.ok) {
@@ -258,4 +269,7 @@ $('dl-vcf').addEventListener('click', () => {
   download(toVCF(selected()), 'vcf', 'text/vcard;charset=utf-8');
 });
 
-load().catch((e) => message(t('errUnexpected'), t('retry'), null, String(e && e.stack || e)));
+function start() {
+  load().catch((e) => message(t('errUnexpected'), t('retry'), null, String(e && e.stack || e)));
+}
+start();
