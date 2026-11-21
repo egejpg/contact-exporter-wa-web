@@ -12,6 +12,7 @@ Mağaza sayfası: https://chromewebstore.google.com/detail/contact-exporter-for-
    - Küçük tanıtım kutusu (440×280): `tanitim-kucuk-440x280.png`
    - Kayan tanıtım (1400×560): `tanitim-kayan-1400x560.png`
    - Mağaza simgesi (128×128): `magaza-simgesi-128.png`
+5. İngilizce görseller `store-assets/en/` klasöründe (aynı ölçüler): `01-main`, `02-phone`, `03-excel`, `04-privacy`, `promo-small-440x280`, `promo-marquee-1400x560`. Mağaza girişinde dil seçiciden English'i seçip bunları yükle.
 
 ## Diller
 

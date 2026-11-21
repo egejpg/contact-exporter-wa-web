@@ -15,7 +15,7 @@
   "optUnsaved": { "message": "Rehberde kayıtlı olmayanları da ekle" },
   "numberFormat": { "message": "Numara biçimi" },
   "fmtE164": { "message": "Uluslararası" },
-  "fmtIntl": { "message": "Uluslararası, boşluklu" },
+  "fmtIntl": { "message": "Boşluklu" },
   "fmtLocal": { "message": "Yerel" },
   "fmtIdd": { "message": "00 ile" },
   "fmtDigits": { "message": "Yalnızca rakam" },

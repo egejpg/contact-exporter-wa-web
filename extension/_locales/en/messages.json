@@ -15,7 +15,7 @@
   "optUnsaved": { "message": "Also include numbers not saved in your contacts" },
   "numberFormat": { "message": "Number format" },
   "fmtE164": { "message": "International" },
-  "fmtIntl": { "message": "International, spaced" },
+  "fmtIntl": { "message": "Spaced" },
   "fmtLocal": { "message": "Local" },
   "fmtIdd": { "message": "With 00" },
   "fmtDigits": { "message": "Digits only" },
